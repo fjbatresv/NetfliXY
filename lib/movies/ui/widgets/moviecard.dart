@@ -10,15 +10,19 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String heroId = DateTime.now().millisecondsSinceEpoch.toString();
     return InkWell(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Detail(id: movie.id),
+          builder: (context) => Detail(
+            id: movie.id,
+            heroId: heroId,
+          ),
         ),
       ),
       child: Hero(
-        tag: movie.id.toString(),
+        tag: heroId,
         child: Container(
           width: 100,
           alignment: Alignment.center,

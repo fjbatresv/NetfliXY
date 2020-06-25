@@ -53,6 +53,7 @@ class Home extends StatelessWidget {
             if (snapshot.error != null) {
               return Text(snapshot.error.toString());
             } else {
+              String heroId = DateTime.now().millisecondsSinceEpoch.toString();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,21 +64,26 @@ class Home extends StatelessWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              Detail(id: snapshot.data.results[0].id),
+                          builder: (context) => Detail(
+                            id: snapshot.data.results[0].id,
+                            heroId: heroId,
+                          ),
                         ),
                       ),
-                      child: Container(
-                        height: 200,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.fitHeight,
-                            image: CachedNetworkImageProvider(
-                              snapshot.data.results[0].posterPath,
+                      child: Hero(
+                        tag: heroId,
+                        child: Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: CachedNetworkImageProvider(
+                                snapshot.data.results[0].posterPath,
+                              ),
                             ),
                           ),
                         ),
@@ -96,8 +102,9 @@ class Home extends StatelessWidget {
                     height: 200,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children:
-                          snapshot.data.results.map<Widget>((Movie movie) {
+                      children: snapshot.data.results
+                          .sublist(1)
+                          .map<Widget>((Movie movie) {
                         return MovieCard(
                           movie: movie,
                         );

@@ -8,8 +8,9 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 
 class Detail extends StatelessWidget {
   final int id;
+  final String heroId;
 
-  Detail({Key key, this.id}) : super(key: key);
+  Detail({Key key, this.id, @required this.heroId}) : super(key: key);
 
   MovieBloc _bloc;
 
@@ -36,7 +37,7 @@ class Detail extends StatelessWidget {
                         child: Stack(
                           children: [
                             Hero(
-                              tag: movie.id.toString(),
+                              tag: this.heroId,
                               child: Container(
                                 height: 250,
                                 decoration: BoxDecoration(
